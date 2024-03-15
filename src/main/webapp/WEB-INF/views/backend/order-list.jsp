@@ -8,27 +8,26 @@
 <html dir="ltr" lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<!-- Tell the browser to be responsive to screen width -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<!-- Favicon icon -->
-	<link rel="icon" type="image/png" sizes="16x16"
-		href="${classpath}/admin/assets/images/favicon.png">
-	<title>${projectTitle }</title>
-	
-	<!-- variables -->
-	<jsp:include page="/WEB-INF/views/common/variables.jsp"></jsp:include>
-	
-	<!-- Custome css resource file -->
-	<jsp:include page="/WEB-INF/views/backend/layout/css.jsp"></jsp:include>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="${classpath}/admin/assets/images/favicon.png">
+<title>${title }</title>
+
+<!-- variables -->
+<jsp:include page="/WEB-INF/views/common/variables.jsp"></jsp:include>
+
+<!-- Custome css resource file -->
+<jsp:include page="/WEB-INF/views/backend/layout/css.jsp"></jsp:include>
 
 </head>
 
 <body>
-
 
 	<!-- End test -->
 	<!-- ============================================================== -->
@@ -66,7 +65,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!-- ============================================================== -->
 			<!-- End Bread crumb and right sidebar toggle -->
 			<!-- ============================================================== -->
@@ -78,125 +77,127 @@
 				<!-- Start Page Content -->
 				<!-- ============================================================== -->
 				<!-- basic table -->
-				<form action="${classpath }/admin/order-list" method="get">
-					
-						<div class="row">
-							<div class="col-12">
-								<div class="card">
-									<div class="card-body">
-										<div class="table-responsive">
-											
-											<!-- Tìm kiếm -->
-											<div class="row">
-												<div class="col-md-3">
-													<div class="form-group mb-4">
-				                                        <select class="form-control"
-															id="status" name="status">
-																<option value="2">Tất cả đơn hàng</option>
-																<option value="1">Đơn hàng đã giao</option>
-																<option value="0">Đơn hàng chưa giao</option>
-														</select>
-													</div>
-												</div>
-												
-												<div class="col-md-2">
-													<input class="form-control" type="date" 
-														id="beginDate" name="beginDate"/>		
-												</div>
-												<div class="col-md-2">
-													<input class="form-control"
-																	type="date" id="endDate" name="endDate" />		
-												</div>
-												
-												<div class="col-md-3">
-													<input type="text" class="form-control" id="keyword"
-															name="keyword" placeholder="Search keyword" />		
-												</div>
-												
-												<div class="col-md-1">
-													<button type="submit" id="btnSearch" name="btnSearch" class="btn btn-primary">Search</button>
-												</div>
-												<div class="col-md-1">
-													<input id="page" name="page" type="hidden"
-																		class="form-control" value="${saleOrderSearch.currentPage }"></th>
+				<form action="${classpath }/admin/order/list" method="get">
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="table-responsive">
+										<!-- Tìm kiếm -->
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group mb-4">
+													<select class="form-control" id="status" name="status">
+														<option value="2">Tất cả đơn hàng</option>
+														<option value="1">Đơn hàng đã giao</option>
+														<option value="0">Đơn hàng chưa giao</option>
+													</select>
 												</div>
 											</div>
-											<!-- Hết tìm kiếm -->
-		
-											<table id="zero_config"
-												class="table table-striped table-bordered no-wrap">
-												<thead>
-													<tr align="center">
-														<th scope="col">No.</th>
-														<th scope="col">Code</th>
-														<th scope="col">Customer</th>
-														<th scope="col">Mobile</th>
-														<th scope="col">Address</th>
-														<th scope="col">Payment</th>
-														<th scope="col">Create by</th>
-														<!-- <th scope="col">Update by</th> -->
-														<th scope="col">Create date</th>
-														<th scope="col">Delivery date</th>
-														<th scope="col">Status</th>
-														<th scope="col">Edit</th>
-														<th scope="col">Delete</th>
-	
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach var="saleOrder" items="${saleOrders }"
-														varStatus="loop">
-														<tr>
-															<th scope="row">${loop.index + 1 }</th>
-	
-															<td align="center">${saleOrder.code }</td>
-															<td>${saleOrder.customerName }</td>
-															<td align="center">${saleOrder.customerMobile }</td>
-															<td>${saleOrder.customerAddress }</td>
-															<td align="right"><fmt:formatNumber
-																	value="${saleOrder.total }" minFractionDigits="0"></fmt:formatNumber>
-															</td>
-															<td>${saleOrder.userCreateSaleOrder.username }</td>
-															<%-- <td>${saleOrder.updateBy }</td> --%>
-															<td><fmt:formatDate pattern="dd-MM-yyyy"
-																	value="${saleOrder.createDate}" /></td>
-															<td><fmt:formatDate pattern="dd-MM-yyyy"
-																	value="${saleOrder.updateDate}" /></td>
-	
-															<td><c:choose>
-																	<c:when test="${saleOrder.status }">
+
+											<div class="col-md-2">
+												<input class="form-control" type="date" id="beginDate"
+													name="beginDate" />
+											</div>
+											<div class="col-md-2">
+												<input class="form-control" type="date" id="endDate"
+													name="endDate" />
+											</div>
+
+											<div class="col-md-3">
+												<input type="text" class="form-control" id="keyword"
+													name="keyword" placeholder="Search keyword" />
+											</div>
+
+											<div class="col-md-1">
+												<button type="submit" id="btnSearch" name="btnSearch"
+													class="btn btn-primary">Search</button>
+											</div>
+											<div class="col-md-1">
+												<input id="page" name="page" type="hidden"
+													class="form-control"
+													value="${saleOrderSearch.currentPage }">
+											</div>
+										</div>
+										<!-- Hết tìm kiếm -->
+
+										<table id="zero_config"
+											class="table table-striped table-bordered no-wrap">
+											<thead>
+												<tr align="center">
+													<th scope="col">No.</th>
+													<th scope="col">Code</th>
+													<th scope="col">Customer</th>
+													<th scope="col">Mobile</th>
+													<th scope="col">Email</th>
+													<th scope="col">Address</th>
+													<th scope="col">Payment</th>
+													<th scope="col">Create by</th>
+													<th scope="col">Update by</th>
+													<th scope="col">Create date</th>
+													<th scope="col">Delivery date</th>
+													<th scope="col">Status</th>
+													<th scope="col">Edit</th>
+													<th scope="col">Delete</th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="saleOrder" items="${saleOrders }"
+													varStatus="loop">
+													<tr>
+														<th scope="row">${loop.index + 1 }</th>
+
+														<td align="center">${saleOrder.code }</td>
+														<td>${saleOrder.customerName }</td>
+														<td align="center">${saleOrder.customerMobile }</td>
+														<td>${saleOrder.customerEmail }</td>
+														<td>${saleOrder.customerAddress }</td>
+														<td align="right"><fmt:formatNumber type="currency"
+																currencyCode="VND" value="${saleOrder.total }"
+																minFractionDigits="0"></fmt:formatNumber></td>
+														<td>${saleOrder.userCreateSaleOrder.username }</td>
+														<td>${saleOrder.userUpdateSaleOrder.username }</td>
+														<td><fmt:formatDate pattern="dd-MM-yyyy"
+																value="${saleOrder.createDate}" /></td>
+														<td><fmt:formatDate pattern="dd-MM-yyyy"
+																value="${saleOrder.updateDate}" /></td>
+
+														<td><c:choose>
+																<c:when test="${saleOrder.status }">
 																		Đã giao hàng
 																	</c:when>
-																	<c:otherwise>Chưa giao hàng</c:otherwise>
-																</c:choose></td>
-	
-															<td><a
-																href="${rootpath }/edit-product/${saleOrder.id }"
-																role="button" class="btn btn-primary">Edit</a>
-															<td><a
-																href="${rootpath }/delete-product/${saleOrder.id }"
-																role="button" class="btn btn-secondary">Delete</a>
-														</tr>
-													</c:forEach>
-												</tbody>
-											</table>
+																<c:otherwise>Chưa giao hàng</c:otherwise>
+															</c:choose></td>
 
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group mb-4">
-														<h3>
-															Total sales:
-															<fmt:formatNumber value="${totalSales }"
-																minFractionDigits="0"></fmt:formatNumber>(vnđ)
-														</h3>
-													</div>
+														<td><a
+															href="${classpath }/admin/order/edit/${saleOrder.id }"
+															role="button" class="btn btn-primary">Edit</a>
+														<td><a
+															href="${classpath }/admin/order/delete/${saleOrder.id }"
+															role="button" class="btn btn-secondary">Delete</a>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group mb-4">
+													<h3>
+														Total sales:
+														<fmt:formatNumber value="${totalSales }"
+															minFractionDigits="0"></fmt:formatNumber>
+														(vnđ)
+													</h3>
 												</div>
-	
-												<div class="col-md-6" >
-													<!-- Phan trang -->
-													<div class="pagination float-right">
-														<div id="paging"></div>
-													</div>
+											</div>
+
+											<div class="col-md-6">
+												<!-- Phan trang -->
+												<div class="pagination float-right">
+													<div id="paging"></div>
 												</div>
 											</div>
 										</div>
@@ -204,7 +205,8 @@
 								</div>
 							</div>
 						</div>
-					
+					</div>
+
 				</form>
 			</div>
 			<!-- ============================================================== -->
@@ -228,7 +230,7 @@
 
 	<!-- Slider js: All Jquery-->
 	<jsp:include page="/WEB-INF/views/backend/layout/js.jsp"></jsp:include>
-	
+
 	<script type="text/javascript">
 		$( document ).ready(function() {
 			//Dat gia tri cua status ung voi dieu kien search truoc do
@@ -246,7 +248,7 @@
 			});
 		});
 	</script>
-	
+
 </body>
 
 </html>

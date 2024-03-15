@@ -15,12 +15,12 @@
 <title>Product</title>
 <!-- CSS -->
 <jsp:include page="/WEB-INF/views/frontend/layout/css.jsp"></jsp:include>
-<style type="text/css">
-.cartegory-right-content {
-	margin-top: 20px;
-	gap: 16px;
-}
-</style>
+	<style type="text/css">
+	.cartegory-right-content {
+		margin-top: 20px;
+		gap: 16px;
+	}
+	</style>
 </head>
 
 <body>
@@ -85,6 +85,11 @@
 								<li><input type="checkbox" value="1" name="price"
 									id="price5"> <label for="price5">Trên
 										5.000.000đ</label></li>
+								<c:forEach items="${priceRanges}" var="priceRange">
+									<li><input type="checkbox" value="${priceRange.value}"
+										name="price" id="price${priceRange.value}"> <label
+										for="price${priceRange.value}">${priceRange.label}</label></li>
+								</c:forEach>
 							</ul>
 						</li>
 					</ul>
@@ -118,12 +123,14 @@
 								<div class="price margin-price">
 									<p class="new-price">
 										<fmt:formatNumber value="${product.price}"
-											minFractionDigits="0" />đ
-										<span> <fmt:formatNumber value="${product.salePrice}"
+											minFractionDigits="0" />
+										đ <span> <fmt:formatNumber value="${product.salePrice}"
 												minFractionDigits="0" />đ
 										</span>
 									</p>
-									<button class="btn-buy">
+									<button type="button"
+										onclick="AddProductToCart('${classpath}', ${product.id}, 1)"
+										class="btn-buy">
 										<i class="fa-solid fa-bag-shopping"></i>
 									</button>
 								</div>
@@ -219,6 +226,64 @@
             }
         });
     });
+    
+    function AddProductToCart(baseUrl, productId, quantity, productName) {
+	    let data = {
+	        productId: productId,
+	        quantity: quantity,
+	        productName: productName,
+	    };
+
+	    jQuery.ajax({
+	        url: baseUrl + "/add-to-cart",
+	        type: "post",
+	        contentType: "application/json",
+	        data: JSON.stringify(data),
+	        dataType: "json",
+	        success: function (jsonResult) {
+	            let totalItems = jsonResult.totalItems || 0; // Sử dụng giá trị mặc định là 0 nếu không có totalItems từ server
+	            $("#totalCartProductsId").html(totalItems); // Cập nhật số lượng sản phẩm trong giỏ hàng
+	        },
+	        error: function (jqXhr, textStatus, errorMessage) {
+	            console.log("Error:", errorMessage);
+	        }
+	    });
+	}
+    
+    var priceRanges = [
+        { label: '0đ - 500.000đ', value: '0-500000' },
+        { label: '500.000đ - 1.000.000đ', value: '500000-1000000' },
+        { label: '1.000.000đ - 3.000.000đ', value: '1000000-3000000' },
+        { label: '3.000.000đ - 5.000.000đ', value: '3000000-5000000' },
+        { label: 'Trên 5.000.000đ', value: '5000000' }
+    ];
+
+    // Khai báo mảng để lưu trữ các giá trị giá tiền đã chọn
+    var selectedPrices = [];
+
+    document.querySelectorAll('input[name="price"]').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            // Xóa tất cả các giá trị cũ ra khỏi mảng
+            selectedPrices = [];
+            
+            // Lặp qua tất cả các checkbox đã được chọn và thêm giá trị vào mảng
+            document.querySelectorAll('input[name="price"]:checked').forEach(function(checkedCheckbox) {
+                selectedPrices.push(checkedCheckbox.value);
+            });
+
+            // Log hoặc sử dụng mảng các giá trị đã chọn
+            console.log(selectedPrices);
+        });
+    });
+    
+    $('.btn-check').on('click', function() {
+        var selectedPrices = [];
+        document.querySelectorAll('input[name="price"]:checked').forEach(function(checkedCheckbox) {
+            selectedPrices.push(checkedCheckbox.value);
+        });
+ 
+    });
+
 </script>
 
 </html>

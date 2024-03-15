@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import vn.devpro.FinalProject.controller.BaseController;
 import vn.devpro.FinalProject.model.Product;
 import vn.devpro.FinalProject.service.ProductService;
+import vn.devpro.FinalProject.service.SliderService;
 import vn.devpro.FinalProject.model.ProductImage;
+import vn.devpro.FinalProject.model.Slider;
 import vn.devpro.FinalProject.service.ProductImageService;
 
 @Controller
@@ -28,12 +30,18 @@ public class HomeController extends BaseController {
 	@Autowired
 	private ProductImageService productImageService;
 	
+	@Autowired
+	private SliderService sliderService;
+	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(final Model model, final HttpServletRequest request,
 			final HttpServletResponse response) throws IOException {
 		
 		List<Product> products = productService.findAllActive();
 		model.addAttribute("products", products);
+		
+		List<Slider> sliders = sliderService.findAllActive();
+		model.addAttribute("sliders", sliders);
 		
 		return "frontend/index";
 	}

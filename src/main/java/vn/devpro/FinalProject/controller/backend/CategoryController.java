@@ -21,7 +21,6 @@ import vn.devpro.FinalProject.dto.SearchModel;
 import vn.devpro.FinalProject.model.Category;
 import vn.devpro.FinalProject.model.User;
 import vn.devpro.FinalProject.service.CategoryService;
-import vn.devpro.FinalProject.service.ProductService;
 import vn.devpro.FinalProject.service.UserService;
 
 @Controller

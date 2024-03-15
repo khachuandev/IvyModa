@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import vn.devpro.FinalProject.dto.SearchModel;
 import vn.devpro.FinalProject.model.Category;
-import vn.devpro.FinalProject.model.Product;
 
 @Service
 public class CategoryService extends BaseService<Category>{

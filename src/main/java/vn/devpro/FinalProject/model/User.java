@@ -2,6 +2,7 @@ package vn.devpro.FinalProject.model;
 
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,9 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "tbl_user")
-public class User extends BaseModel {
+public class User extends BaseModel implements UserDetails {
 	
 	@Column(name = "username", length = 120, nullable = false)
 	private String username;
@@ -126,6 +130,21 @@ public class User extends BaseModel {
 		product.setUserUpdateProduct(null);
 	}
 	
+	/*---Mapping one-to-many: tbl_user-to-tbl_slider: 1 người dùng có thể cập nhật nhiều slider*/
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userUpdateSlider")
+	private Set<Slider> userUpdateSliders = new HashSet<Slider>();
+	
+	// Add and remove elements out of relational userCreateProducts list
+	public void addRelationalUserUpdateSlider(Slider slider) {
+		userUpdateSliders.add(slider);
+		slider.setUserUpdateSlider(this);
+	}
+	
+	public void removeRelationalUserUpdateSlider(Slider slider) {
+		userUpdateSliders.remove(slider);
+		slider.setUserUpdateSlider(null);
+	}
+	
 	/*---Mapping many-to-one: tbl_user-to-tbl_user: (user create user)*/
 	@ManyToOne(fetch = FetchType.EAGER) 
 	@JoinColumn(name = "create_by")
@@ -151,8 +170,8 @@ public class User extends BaseModel {
 	public User(Integer id, Date createDate, Date updateDate, Boolean status, String username, String password,
 			String name, String mobile, String email, String address, String description, Set<SaleOrder> saleOrders,
 			List<Role> roles, Set<Category> userCreateCategories, Set<Category> userUpdateCategories,
-			Set<Product> userCreateProducts, Set<Product> userUpdateProducts, User userCreateUser, User userUpdateUser,
-			Set<User> userCreateUsers, Set<User> userUpdateUsers) {
+			Set<Product> userCreateProducts, Set<Product> userUpdateProducts, Set<Slider> userUpdateSliders,
+			User userCreateUser, User userUpdateUser, Set<User> userCreateUsers, Set<User> userUpdateUsers) {
 		super(id, createDate, updateDate, status);
 		this.username = username;
 		this.password = password;
@@ -167,6 +186,7 @@ public class User extends BaseModel {
 		this.userUpdateCategories = userUpdateCategories;
 		this.userCreateProducts = userCreateProducts;
 		this.userUpdateProducts = userUpdateProducts;
+		this.userUpdateSliders = userUpdateSliders;
 		this.userCreateUser = userCreateUser;
 		this.userUpdateUser = userUpdateUser;
 		this.userCreateUsers = userCreateUsers;
@@ -277,6 +297,14 @@ public class User extends BaseModel {
 		this.userUpdateProducts = userUpdateProducts;
 	}
 
+	public Set<Slider> getUserUpdateSliders() {
+		return userUpdateSliders;
+	}
+
+	public void setUserUpdateSliders(Set<Slider> userUpdateSliders) {
+		this.userUpdateSliders = userUpdateSliders;
+	}
+
 	public User getUserCreateUser() {
 		return userCreateUser;
 	}
@@ -307,5 +335,30 @@ public class User extends BaseModel {
 
 	public void setUserUpdateUsers(Set<User> userUpdateUsers) {
 		this.userUpdateUsers = userUpdateUsers;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.roles;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

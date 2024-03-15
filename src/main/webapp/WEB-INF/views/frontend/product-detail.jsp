@@ -16,6 +16,11 @@
 <!-- CSS -->
 <jsp:include page="/WEB-INF/views/frontend/layout/css.jsp"></jsp:include>
 </head>
+	<style>
+		.btn-cart-product-detail:hover a {
+		    color: #fff;
+		}
+	</style>
 
 <body>
 	<!-- Begin: Header -->
@@ -93,14 +98,18 @@
 					</div>
 					<div class="quantity-product-detail">
 						<p>Số lượng:</p>
-						<input type="number" min="0" value="1">
+						<input type="number" id="quantityInput" min="0" value="1">
 					</div>
 					<div class="product-detail-content-right-product-button">
-						<button class="btn-add-product-detail">
+						<button type="button"
+							onclick="addToCart(${product.id }, '${product.name }')"
+							class="btn-add-product-detail">
 							<p>Thêm vào giỏ</p>
 						</button>
-						<button class="btn-cart-product-detail">
-							<a href=""><p>Mua hàng</p></a>
+						<button type="button"
+							onclick="addToCart(${product.id }, '${product.name }')"
+							class="btn-cart-product-detail">
+							<a href="${classpath }/cart-view"><p>Mua hàng</p></a>
 						</button>
 					</div>
 					<div class="product-detail-content-right-bottom">
@@ -287,7 +296,9 @@
 									<sup>đ</sup> <span class="sale-price"> <fmt:formatNumber
 											value="${relatedProduct.salePrice}" minFractionDigits="0" /><sup>đ</sup>
 								</p>
-								<button class="btn-buy">
+								<button type="button"
+									onclick="addToCart(${product.id }, '${product.name }')"
+									class="btn-buy">
 									<i class="fa-solid fa-bag-shopping"></i>
 								</button>
 							</div>
@@ -301,10 +312,9 @@
 	<!-- Begin: Footer -->
 	<jsp:include page="/WEB-INF/views/frontend/layout/footer.jsp"></jsp:include>
 	<!-- End: Footer -->
-	<a href="#"><i class="fa-solid fa-circle-chevron-up up-header"></i></a>
 </body>
-<!-- JS -->
-<jsp:include page="/WEB-INF/views/frontend/layout/js.jsp"></jsp:include>
+	<!-- JS -->
+	<jsp:include page="/WEB-INF/views/frontend/layout/js.jsp"></jsp:include>
 <script>
 	// Đổi img
 	const bigImg = document
@@ -383,5 +393,34 @@
 	// Sự kiện thay đổi chiều cao
 	window.addEventListener('resize', changeHeight);
 </script>
+	<script type="text/javascript">
+		addToCart = function(_productId, _productName ) {		
+			//alert("Thêm "  + _quantity + " sản phẩm '" + _productName + "' vào giỏ hàng ");
+			let data = {
+				productId: _productId, //lay theo id
+				quantity: jQuery("#quantityInput").val(),
+				productName: _productName,
+			};
+				
+			//$ === jQuery
+			jQuery.ajax({
+				url : "/add-to-cart",
+				type : "POST",
+				contentType: "application/json",
+				data : JSON.stringify(data),
+				dataType : "json", //Kieu du lieu tra ve tu controller la json
+				
+				success : function(jsonResult) {
+					alert(jsonResult.code + ": " + jsonResult.message);
+					let totalProducts = jsonResult.totalCartProducts;
+					$("#totalCartProductsId").html(totalProducts);
+				},
+				
+				error : function(jqXhr, textStatus, errorMessage) {
+					alert(jsonResult.code + ': Đã có lỗi xay ra...!')
+				},
+			});
+		}
+	</script>
 
 </html>

@@ -82,7 +82,7 @@
                                 class="svg-icon mr-2 ml-1"></i>
                             Account Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="${classpath }/logout"><i data-feather="power"
+                        <a class="dropdown-item" href="${classpath }/index"><i data-feather="power"
                                 class="svg-icon mr-2 ml-1"></i>
                             Logout</a>
                         <div class="dropdown-divider"></div>

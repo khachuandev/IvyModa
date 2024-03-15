@@ -34,10 +34,14 @@
 				<li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${classpath }/admin/order/list"
                         aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span
                             class="hide-menu">Orders</span></a></li>
-                            
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${classpath }/addmin/contact/list"
+                
+                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${classpath }/admin/slider/list"
                         aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span
-                            class="hide-menu">Customer contact</span></a></li>
+                            class="hide-menu">Sliders</span></a></li>
+                            
+                <%-- <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${classpath }/addmin/contact/list"
+                        aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span
+                            class="hide-menu">Customer contact</span></a></li> --%>
 				
                
                 <li class="list-divider"></li>
@@ -45,16 +49,16 @@
 
                 <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${classpath}/login"
                         aria-expanded="false"><i data-feather="lock" class="feather-icon"></i><span
-                            class="hide-menu">Login
+                            class="hide-menu">Login and Signup
                         </span></a>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
-                        href="${classpath}/register" aria-expanded="false"><i data-feather="lock"
+                <%-- <li class="sidebar-item"> <a class="sidebar-link sidebar-link"
+                        href="${classpath}/login" aria-expanded="false"><i data-feather="lock"
                             class="feather-icon"></i><span class="hide-menu">Register
                         </span></a>
-                </li>
+                </li> --%>
 
-                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${classpath}/logout"
+                <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="${classpath}/index"
                         aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span
                             class="hide-menu">Logout</span></a></li>
             </ul>

@@ -59,12 +59,12 @@ public class SaleOrder extends BaseModel {
 	/*---Mapping many-to-one: tbl_sale_order-to-tbl_user: nhiều hóa đơn được tạo bởi 1 người dùng*/
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "create_by")
-	private SaleOrder userCreateSaleOrder;
+	private User userCreateSaleOrder;
 	
 	/*---Mapping many-to-one: tbl_sale_order-to-tbl_user: nhiều hóa đơn được cập nhật bởi 1 người dùng*/
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "update_by")
-	private SaleOrder userUpdateSaleOrder;
+	private User userUpdateSaleOrder;
 	
 	public SaleOrder() {
 		super();
@@ -72,8 +72,7 @@ public class SaleOrder extends BaseModel {
 
 	public SaleOrder(Integer id, Date createDate, Date updateDate, Boolean status, String code, BigDecimal total,
 			String customerName, String customerMobile, String customerEmail, String customerAddress,
-			Set<SaleOrderProduct> saleOrderProducts, User user, SaleOrder userCreateSaleOrder,
-			SaleOrder userUpdateSaleOrder) {
+			Set<SaleOrderProduct> saleOrderProducts, User user, User userCreateSaleOrder, User userUpdateSaleOrder) {
 		super(id, createDate, updateDate, status);
 		this.code = code;
 		this.total = total;
@@ -151,19 +150,19 @@ public class SaleOrder extends BaseModel {
 		this.user = user;
 	}
 
-	public SaleOrder getUserCreateSaleOrder() {
+	public User getUserCreateSaleOrder() {
 		return userCreateSaleOrder;
 	}
 
-	public void setUserCreateSaleOrder(SaleOrder userCreateSaleOrder) {
+	public void setUserCreateSaleOrder(User userCreateSaleOrder) {
 		this.userCreateSaleOrder = userCreateSaleOrder;
 	}
 
-	public SaleOrder getUserUpdateSaleOrder() {
+	public User getUserUpdateSaleOrder() {
 		return userUpdateSaleOrder;
 	}
 
-	public void setUserUpdateSaleOrder(SaleOrder userUpdateSaleOrder) {
+	public void setUserUpdateSaleOrder(User userUpdateSaleOrder) {
 		this.userUpdateSaleOrder = userUpdateSaleOrder;
 	}
 }

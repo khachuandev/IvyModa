@@ -49,35 +49,36 @@ public class ProductController extends BaseController implements FinalProjectCon
 //		return "backend/product-list";
 //	}
 	
-	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public String list(final Model model, final HttpServletRequest request) {
+	@RequestMapping(value = "list", method = RequestMethod.GET)	
+	public String list(final Model model,
+			final HttpServletRequest request) {
 		
+		// Tìm theo status
 		SearchModel productSearch = new SearchModel();
-		// Tim theo status 
 		productSearch.setStatus(2); // All
 		String status = request.getParameter("status");
 		if(!StringUtils.isEmpty(status)) { // Co chon status
 			productSearch.setStatus(Integer.parseInt(status));
 		}
 		
-		// Tim theo category
+		// Tìm theo category
 		productSearch.setCategoryId(0); // All
 		String categoryId = request.getParameter("categoryId");
 		if(!StringUtils.isEmpty(categoryId)) { // Co chon category
 			productSearch.setCategoryId(Integer.parseInt(categoryId));
 		}
 		
-		// Tim theo keyword
+		// Tìm theo keyword
 		productSearch.setKeyword(null);
 		String keyword = request.getParameter("keyword");
 		if(!StringUtils.isEmpty(keyword)) { // Co tra keyword
 			productSearch.setKeyword(keyword);
 		}
 		
-		// Kiem tra theo tieu chi tu ngay den ngay
+		// Kiem tra tieu chi tim kiem tu ngay den ngay
 		String beginDate = null;
 		String endDate = null;
-		if(!StringUtils.isEmpty(request.getParameter("beginDate")) 
+		if (!StringUtils.isEmpty(request.getParameter("beginDate"))
 				&& !StringUtils.isEmpty(request.getParameter("endDate"))) {
 			beginDate = request.getParameter("beginDate");
 			endDate = request.getParameter("endDate");
@@ -89,11 +90,12 @@ public class ProductController extends BaseController implements FinalProjectCon
 		if(!StringUtils.isEmpty(request.getParameter("currentPage"))) { // Bam nut chuyen trang
 			productSearch.setCurrentPage(Integer.parseInt(request.getParameter("currentPage")));
 		} else {
-			productSearch.setCurrentPage(1); // Lan dau truy cap luon hien thi trang 1
+			productSearch.setCurrentPage(1); // lan dau truy cap luon hien thi trang 1
 		}
 		
-		List<Product> allProducts = productService.searchProduct(productSearch); // Tim kiem
-		List<Product> products = new ArrayList<Product>();	
+		List<Product> allProducts = productService.searchProduct(productSearch);// Tim kiem
+		
+		List<Product> products = new ArrayList<Product>(); // DS sp can hien thi trang hien tai
 		
 		// Tong so trang theo tim kiem
 		int totalPages = allProducts.size() / SIZE_OF_PAGE;
@@ -118,12 +120,13 @@ public class ProductController extends BaseController implements FinalProjectCon
 		// Phan trang
 		productSearch.setSizeOfPage(SIZE_OF_PAGE); // So ban ghi tren 1 trang
 		productSearch.setTotalItems(allProducts.size()); // Tong so san pham theo tim kiem
-		
-		model.addAttribute("products", products);
-		model.addAttribute("productSearch", productSearch);
-		
+			
 		List<Category> categories = categoryService.findAll();
 		model.addAttribute("categories", categories);
+		
+        //List<Product> products = productService.searchProduct(productSearch);
+		model.addAttribute("products", products);
+		model.addAttribute("productSearch", productSearch);
 		
 		return "backend/product-list";
 	}

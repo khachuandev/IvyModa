@@ -25,12 +25,9 @@
 	<!-- Begin: Slider -->
 	<div class="container">
 		<div class="slider">
-			<img class="slider-image"
-				src="${classpath }/frontend/asset/image/slider1.png" alt=""> <img
-				class="slider-image"
-				src="${classpath }/frontend/asset/image/slider2.png" alt=""> <img
-				class="slider-image"
-				src="${classpath }/frontend/asset/image/slider3.png" alt="">
+			<c:forEach var="slider" items="${sliders }">
+				<img class="slider-image" src="${classpath }/FileUploads/${slider.slider}" alt="">
+			</c:forEach>
 		</div>
 	</div>
 	<!-- End: Slider -->
@@ -54,7 +51,7 @@
 					</button>
 					<div class="glider-contain">
 						<div class="glider">
-							<c:forEach items="${products}" var="product">
+							<c:forEach items="${products }" var="product">
 								<c:if test="${product.gender.toLowerCase() eq 'female'}">
 									<div class="product-box">
 										<p class="p-discount">
@@ -62,15 +59,15 @@
 										</p>
 										<div class="p-img-container">
 											<div class="p-img">
-												<a href="${classpath}/product-detail/${product.id}"> <img
-													src="${classpath}/FileUploads/${product.avatar}"
+												<a href="${classpath }/product-detail/${product.id}"> <img
+													src="${classpath }/FileUploads/${product.avatar}"
 													class="p-img-front" alt="Front">
 												</a>
 											</div>
 										</div>
 										<div class="p-box-text">
 											<div class="product-category">
-												<a href="${classpath}/product-detail/${product.id}"
+												<a href="${classpath }/product-detail/${product.id}"
 													class="product-title">${product.name}</a>
 											</div>
 											<div class="price">
@@ -82,7 +79,7 @@
 													</span>
 												</p>
 												<button
-													onclick="AddProductToCart('${classpath}', ${product.id}, 1)"
+													onclick="addToCart(${product.id}, 1, '${product.name }')"
 													class="btn-buy">
 													<i class="fa-solid fa-bag-shopping"></i>
 												</button>
@@ -103,7 +100,7 @@
 					</button>
 					<div class="glider-contain">
 						<div class="glider1">
-							<c:forEach items="${products}" var="product">
+							<c:forEach items="${products }" var="product">
 								<c:if test="${product.gender.toLowerCase() eq 'male'}">
 									<div class="product-box">
 										<p class="p-discount">
@@ -111,15 +108,15 @@
 										</p>
 										<div class="p-img-container">
 											<div class="p-img">
-												<a href="${classpath}/product-detail/${product.id}"> <img
-													src="${classpath}/FileUploads/${product.avatar}"
+												<a href="${classpath }/product-detail/${product.id}"> <img
+													src="${classpath }/FileUploads/${product.avatar}"
 													class="p-img-front" alt="Front">
 												</a>
 											</div>
 										</div>
 										<div class="p-box-text">
 											<div class="product-category">
-												<a href="${classpath}/product-detail/${product.id}"
+												<a href="${classpath }/product-detail/${product.id}"
 													class="product-title">${product.name}</a>
 											</div>
 											<div class="price">
@@ -131,7 +128,7 @@
 													</span>
 												</p>
 												<button
-													onclick="AddProductToCart('${classpath}', ${product.id}, 1)"
+													onclick="addToCart(${product.id}, 1, '${product.name }')"
 													class="btn-buy">
 													<i class="fa-solid fa-bag-shopping"></i>
 												</button>
@@ -152,7 +149,7 @@
 					</button>
 					<div class="glider-contain">
 						<div class="glider2">
-							<c:forEach items="${products}" var="product">
+							<c:forEach items="${products }" var="product">
 								<c:if test="${product.gender.toLowerCase() eq 'kid'}">
 									<div class="product-box">
 										<p class="p-discount">
@@ -160,15 +157,15 @@
 										</p>
 										<div class="p-img-container">
 											<div class="p-img">
-												<a href="${classpath}/product-detail/${product.id}"> <img
-													src="${classpath}/FileUploads/${product.avatar}"
+												<a href="${classpath }/product-detail/${product.id}"> <img
+													src="${classpath }/FileUploads/${product.avatar}"
 													class="p-img-front" alt="Front">
 												</a>
 											</div>
 										</div>
 										<div class="p-box-text">
 											<div class="product-category">
-												<a href="${classpath}/product-detail/${product.id}"
+												<a href="${classpath }/product-detail/${product.id}"
 													class="product-title">${product.name}</a>
 											</div>
 											<div class="price">
@@ -180,7 +177,7 @@
 													</span>
 												</p>
 												<button type="button"
-													onclick="AddProductToCart('${classpath}', ${product.id}, 1)"
+													onclick="addToCart(${product.id}, 1, '${product.name }')"
 													class="btn-buy">
 													<i class="fa-solid fa-bag-shopping"></i>
 												</button>
@@ -232,7 +229,7 @@
 									</span>
 								</p>
 								<button type="button"
-									onclick="AddProductToCart('${classpath}', ${product.id}, 1)"
+									onclick="addToCart(${product.id}, 1, '${product.name }')"
 									class="btn-buy">
 									<i class="fa-solid fa-bag-shopping"></i>
 								</button>
@@ -293,37 +290,37 @@
 
 	<!-- Begin: Footer -->
 	<jsp:include page="/WEB-INF/views/frontend/layout/footer.jsp"></jsp:include>
-	<jsp:include page="/WEB-INF/views/frontend/layout/js.jsp"></jsp:include>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-		    // Thiết lập giá trị mặc định cho số lượng sản phẩm trong giỏ hàng là 0
-		    document.getElementById('totalCartProductsId').innerText = 0;
-		});
-		
-		function AddProductToCart(baseUrl, productId, quantity, productName) {
-		    let data = {
-		        productId: productId,
-		        quantity: quantity,
-		        productName: productName,
-		    };
-	
-		    jQuery.ajax({
-		        url: baseUrl + "/add-to-cart",
-		        type: "post",
-		        contentType: "application/json",
-		        data: JSON.stringify(data),
-		        dataType: "json",
-		        success: function (jsonResult) {
-		            let totalItems = jsonResult.totalItems || 0; // Sử dụng giá trị mặc định là 0 nếu không có totalItems từ server
-		            $("#totalCartProductsId").html(totalItems); // Cập nhật số lượng sản phẩm trong giỏ hàng
-		        },
-		        error: function (jqXhr, textStatus, errorMessage) {
-		            console.log("Error:", errorMessage);
-		        }
-		    });
-		}
-	</script>
 </body>
 <!-- JS -->
-
+<jsp:include page="/WEB-INF/views/frontend/layout/js.jsp"></jsp:include>
+<!-- Add to cart -->
+<script type="text/javascript">
+		addToCart = function(_productId, _quantity, _productName) {		
+			//alert("Thêm "  + _quantity + " sản phẩm '" + _productName + "' vào giỏ hàng ");
+			let data = {
+				productId: _productId, //lay theo id
+				quantity: _quantity,
+				productName: _productName,
+			};
+				
+			//$ === jQuery
+			jQuery.ajax({
+				url : "/add-to-cart",
+				type : "POST",
+				contentType: "application/json",
+				data : JSON.stringify(data),
+				dataType : "json", //Kieu du lieu tra ve tu controller la json
+				
+				success : function(jsonResult) {
+					alert(jsonResult.code + ": " + jsonResult.message);
+					let totalProducts = jsonResult.totalCartProducts;
+					$("#totalCartProductsId").html(totalProducts);
+				},
+				
+				error : function(jqXhr, textStatus, errorMessage) {
+					alert(jsonResult.code + ': Đã có lỗi xay ra...!')
+				},
+			});
+		}
+	</script>
 </html>

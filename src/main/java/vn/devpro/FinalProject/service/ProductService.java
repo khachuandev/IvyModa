@@ -77,7 +77,7 @@ public class ProductService extends BaseService<Product> implements FinalProject
 					productImage.setStatus(Boolean.TRUE);
 					productImage.setCreateDate(new Date());
 					
-					//Luudyuong dan anh sang bang product_image
+					//Luu duong dan anh sang bang product_image
 					product.addRelationalProductImage(productImage);
 				}
 			}
@@ -94,9 +94,9 @@ public class ProductService extends BaseService<Product> implements FinalProject
 		Product dbProduct = super.getById(product.getId());
 		
 		//Luu avatar file moi neu nguoi dung co upload avatar
-		if(isUploadFile(avatarFile)) {  //co upload file avtaar
+		if(isUploadFile(avatarFile)) {  //co upload file avatar
 			// Xóa avatar cu (Xoa file avatar)
-			String path = FOLDER_UPLOAD + "Product/Avatar/" + dbProduct.getAvatar();
+			String path = FOLDER_UPLOAD + "Product/Avatar/" + dbProduct.getAvatar(); // lay duong dan cu
 			File file = new File(path);
 			file.delete();
 			
@@ -181,7 +181,7 @@ public class ProductService extends BaseService<Product> implements FinalProject
 		
 		// Tim kiem voi tieu chi category
 		if(productSearch.getCategoryId() != 0) {
-			sql += " AND p.categoryId=" + productSearch.getCategoryId();
+			sql += " AND p.category_id=" + productSearch.getCategoryId();
 		}
 		
 		// Tim kiem voi tieu chi keyword

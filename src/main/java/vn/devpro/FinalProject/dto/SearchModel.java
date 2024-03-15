@@ -17,6 +17,19 @@ public class SearchModel {
 		super();
 	}
 
+	public SearchModel(int status, String keyword, String beginDate, String endDate, int sizeOfPage, int currentPage,
+			int totalItems, int totalPages) {
+		super();
+		this.status = status;
+		this.keyword = keyword;
+		this.beginDate = beginDate;
+		this.endDate = endDate;
+		this.sizeOfPage = sizeOfPage;
+		this.currentPage = currentPage;
+		this.totalItems = totalItems;
+		this.totalPages = totalPages;
+	}
+
 	public SearchModel(int status, int categoryId, String keyword, String beginDate, String endDate, int sizeOfPage,
 			int currentPage, int totalItems, int totalPages) {
 		super();

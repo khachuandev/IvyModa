@@ -77,10 +77,10 @@
 									<div class="table-responsive">
 
 										<div class="row">
-											<div class="col-md-2">
+											<div class="col-md-3">
 												<div class="form-group mb-4">
 													<a href="${classpath }/admin/category/add" role="button"
-														class="btn btn-primary">Add New Category</a>
+														class="btn btn-primary">Add new Category</a>
 												</div>
 											</div>
 											<div class="col-md-3">
@@ -89,7 +89,7 @@
 														${categorySearch.totalItems }</h3>
 												</div>
 											</div>
-											<div class="col-md-5">
+											<div class="col-md-4">
 												<div class="form-group mb-4">
 													<label>Current page</label> <input id="currentPage"
 														name="currentPage" class="form-control"
@@ -180,7 +180,6 @@
 	<!-- ============================================================== -->
 	<!-- End Page wrapper  -->
 	<!-- ============================================================== -->
-	</div>
 	<!-- ============================================================== -->
 	<!-- End Wrapper -->
 	<!-- ============================================================== -->

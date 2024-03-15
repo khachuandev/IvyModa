@@ -17,8 +17,6 @@ import vn.devpro.FinalProject.model.User;
 import vn.devpro.FinalProject.service.RoleService;
 import vn.devpro.FinalProject.service.UserService;
 
-
-
 @Controller
 @RequestMapping("/admin/role/")
 public class RoleController extends BaseModel {
@@ -55,6 +53,8 @@ public class RoleController extends BaseModel {
     public String edit(final Model model, @PathVariable("roleId") int roleId) {
         List<Role> roles = roleService.findAll();
         model.addAttribute("roles", roles);
+        List<User> users = userService.findAll();
+		model.addAttribute("users", users);
         Role role = roleService.getById(roleId);
         model.addAttribute("role", role);
         return "backend/role-edit";

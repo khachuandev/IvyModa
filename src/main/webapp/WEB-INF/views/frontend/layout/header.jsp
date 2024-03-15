@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
+<!-- directive của JSTL -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <header>
 	<div class="menu">
 		<li><a href="${classpath}/product">NỮ</a></li>
@@ -43,9 +48,10 @@
 							class="fa-solid fa-paw icon"></i>Tra cứu đơn hàng</a></li>
 				</div>
 			</ul></li>
-		<li><a href="#"><i class="fa-solid fa-user"></i></a></li>
-		<li class="last-orther"><a href="#"><i
+		<li><a href="${classpath }/login"><i
+				class="fa-solid fa-user"></i></a></li>
+		<li class="last-orther"><a href="${classpath }/cart-view"><i
 				class="fa-solid fa-bag-shopping"></i></a><span id="totalCartProductsId"
-			class="quantity">${totalItems}</span></li>
+			class="quantity">${totalCartProducts }</span></li>
 	</div>
 </header>
